@@ -4,7 +4,8 @@ class CommentsController < ApplicationController
   # GET /comments
   # GET /comments.json
   def index
-    @comments = Comment.all
+    # @comments = Comment.where(photo: @photo)
+    @comments = @photo.comments
     @new_comment = Comment.new
   end
 
