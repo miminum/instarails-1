@@ -56,3 +56,33 @@ creates join table
       # is there a 'liked' field in the form?
       params.require(:photo)[:liked].present?
     end
+
+# Creating comments relationship
+## rails g scaffold Comment photo:references user:references content:text
+### migration file 
+- t.index :created_at # Allow us to sort chronologically
+
+### routes.rb
+-   resources :photos do
+    resources :comments
+  end
+
+### index.html.erb
+- add new_photo_comment_path(@photo)
+
+### comments_controller.rb 
+- add @songs
+--- 
+    def set_photo
+      @photo = Photo.find(params[:photo_id])
+    end
+- add to top
+---     
+    before_action :set_photo
+- to def index
+--- 
+     @new_comment = Comment.new
+
+### form.html.erb
+- [@photo, comment]
+- delete index.new.html from views/comments
