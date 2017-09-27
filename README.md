@@ -1,24 +1,8 @@
-# README
-
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## rails g migration CreateJoinTableCategoryLikes user photo
+creates join table
+### migration file
+- then added ' table_name: :likes' to migration file
+- unhashed 't.index [:photo_id, :user_id]' wihch allows to see all phtos liked by a specific person
+- unique: :true added
+- t.timestamps :created_at
+- force: true
