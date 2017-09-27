@@ -82,7 +82,42 @@ creates join table
 - to def index
 --- 
      @new_comment = Comment.new
+- replace :new with :index in the def create else statement
+---
+    def create
+      @comment = Comment.all
+      @new_comment = Comment.new(comment_params)
+      @new_comment.user = current_user
+      @new_comment.photo = @photo
+
+      respond_to do |format|
+        if @new_comment.save
+          format.html { redirect_to @comment, notice: 'Comment was successfully created.' }
+          format.json { render :show, status: :created, location: @comment }
+        else # Calidation errors
+          format.html { render :index }
+          format.json { render json: @comment.errors, status: :unprocessable_entity }
+        end
+      end
+    end
+- In destroy
+---
+    comments_photos_url(@photo)
 
 ### form.html.erb
 - [@photo, comment]
 - delete index.new.html from views/comments
+- delete sections with user and photo
+
+### index.html.erb
+- changes
+---
+     <td><%= link_to 'Show', [@photo, comment] %></td>
+     <td><%= link_to 'Edit', edit_photo_comment_path(comment) %></td>
+     <td><%= link_to 'Destroy', [@photo, comment], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+
+### _comment.html.erb
+created from scratch
+
+### edit.html.erb
+- <%= link_to 'Back', photo_comments_path(@photo) %>

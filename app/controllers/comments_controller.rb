@@ -25,15 +25,18 @@ class CommentsController < ApplicationController
   # POST /comments
   # POST /comments.json
   def create
-    @comment = Comment.new(comment_params)
+    @comment = Comment.all
+    @new_comment = Comment.new(comment_params)
+    @new_comment.user = current_user
+    @new_comment.photo = @photo
 
     respond_to do |format|
-      if @comment.save
-        format.html { redirect_to @comment, notice: 'Comment was successfully created.' }
-        format.json { render :show, status: :created, location: @comment }
-      else
-        format.html { render :new }
-        format.json { render json: @comment.errors, status: :unprocessable_entity }
+      if @new_comment.save
+        format.html { redirect_to photo_comments_path(@photo), notice: 'Comment was successfully created.' }
+        format.json { render :show, status: :created, location: @new_comment }
+      else # Calidation errors
+        format.html { render :index }
+        format.json { render json: @new_comment.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -43,7 +46,7 @@ class CommentsController < ApplicationController
   def update
     respond_to do |format|
       if @comment.update(comment_params)
-        format.html { redirect_to @comment, notice: 'Comment was successfully updated.' }
+        format.html { redirect_to photo_comments_url(@photo), notice: 'Comment was successfully updated.' }
         format.json { render :show, status: :ok, location: @comment }
       else
         format.html { render :edit }
@@ -57,7 +60,7 @@ class CommentsController < ApplicationController
   def destroy
     @comment.destroy
     respond_to do |format|
-      format.html { redirect_to comments_url, notice: 'Comment was successfully destroyed.' }
+      format.html { redirect_to photo_comments_url(@photo), notice: 'Comment was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
