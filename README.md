@@ -1,6 +1,6 @@
 # Challenge 27/09/2017
 - Challenge: add location field to photo — hint use migration: https://stackoverflow.com/a/4834906
- 
+- Challenge: private message — hint similar to comments, but messages are between two users, not between a user and a photo
 - Challenge (advanced): add geolocation lookup of location — hint use geocoder gem
 
 # Likes

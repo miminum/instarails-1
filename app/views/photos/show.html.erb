@@ -7,6 +7,7 @@
 <p>
   <strong><%= @photo.user.email %></strong>
   <%= @photo.description %>
+  <em>, <%= @photo.location %></em>
 </p>
 
 <!-- Like button -->
@@ -14,7 +15,9 @@
   <% liked = @photo.liked_by?(current_user) %>
   <%= f.hidden_field :liked, value:liked%>
   <%= f.button liked ? 'Unlike' : 'Like' %>
-<% end %>
+<% end %> 
+
+<%= link_to 'Comments', photo_comments_path(@photo), class: 'btn btn-primary' %>
 
 <% if current_user == @photo.user %>
   <%= link_to 'Edit', edit_photo_path(@photo) %> ·
